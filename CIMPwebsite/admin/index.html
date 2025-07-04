@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIMP Admin Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Add to your style.css for heading styling */
+        .clubs-heading {
+            width: 80%;
+            margin: 0 auto 0.7rem auto;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1e90ff;
+            letter-spacing: 0.05em;
+        }
+
+        .events-heading {
+            width: 80%;
+            margin: 1rem auto 0.7rem auto;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ff6347;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>CIMP Admin Portal</h1>
+        <nav>
+            <a href="#" class="selected">Dashboard</a>
+            <a href="../CCM/index1.html" id="createClubBtn">Create Club</a>
+            <a href="../MM/index2.html">Manage Members</a>
+            <a href="../RA/index3.html">Assign Roles</a>
+        </nav>
+        <div class="header-actions">
+            <div class="profile-dropdown">
+                <button class="profile-btn">
+                    <span class="profile-icon"></span>
+                </button>
+                <div class="profile-menu">
+                    <a href="#">Profile</a>
+                    <a href="#" id="logoutLink">Log Out</a>
+                </div>
+            </div>
+            <button class="login-btn" onclick="alert('Login functionality here')">Login</button>
+        </div>
+    </header>
+    <main>
+        <h2>Welcome to the Club Information Management Portal</h2>
+        <div class="main-boxes">
+            <div class="box box-full">
+                <div class="carousel">
+                    <div class="carousel-track">
+                        <img src="poster.png" alt="Image 1" class="carousel-img" />
+                        <img src="poster.png" alt="Image 2" class="carousel-img" />
+                        <img src="poster.png" alt="Image 3" class="carousel-img" />
+                    </div>
+                    <div class="carousel-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="box-row">
+                <div class="box box-left">
+                    <h3 class="clubs-heading">Clubs</h3>
+                    <div class="search-header">
+                        <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterBoxes()" />
+                        <button onclick="filterBoxes()">Search</button>
+                    </div>
+                    <div class="scroll-list">
+                        <div class="list-box">
+                            <span class="group-name">Comp Prog</span>
+                            <span class="member-count">member-12</span>
+                        </div>
+                        <div class="list-box">
+                            <span class="group-name">Web Dev</span>
+                            <span class="member-count">member-8</span>
+                        </div>
+                        <div class="list-box">
+                            <span class="group-name">projects</span>
+                            <span class="member-count">member-15</span>
+                        </div>
+                        <div class="list-box">
+                            <span class="group-name">spon & mark</span>
+                            <span class="member-count">member-6</span>
+                        </div>
+                        <div class="list-box">
+                            <span class="group-name">design</span>
+                            <span class="member-count">member-20</span>
+                        </div>
+                        <div class="list-box">
+                            <span class="group-name">SMC</span>
+                            <span class="member-count">member-9</span>
+                        </div>
+                        <div class="list-box">
+                            <span class="group-name">Evt mang</span>
+                            <span class="member-count">member-11</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-right">
+                    <h3 class="events-heading">Events</h3>
+                    <div class="events-list">
+                        <div class="event-box">lorem ips</div>
+                        <div class="event-box">dolor sit</div>
+                        <div class="event-box">amet elit</div>
+                        <div class="event-box">sed do</div>
+                        <div class="event-box">eiusmod</div>
+                        <div class="event-box">tempor in</div>
+                        <div class="event-box">incididunt</div>
+                    </div>
+                </div>
+            </div>
+            <div class="extra-section">
+                <div class="info-box">
+                    <div class="info-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum,
+                        distinctio, illum laboriosam temporibus consequatur fugit quia!</div>
+                    <img src="https://picsum.photos/id/1011/180/140" alt="Random Image" />
+                </div>
+                <div class="info-box reverse">
+                    <img src="https://picsum.photos/id/1012/180/140" alt="Random Image" />
+                    <div class="info-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum,
+                        distinctio, illum laboriosam temporibus consequatur fugit quia!</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum,
+                        distinctio, illum laboriosam temporibus consequatur fugit quia!</div>
+                    <img src="https://picsum.photos/id/1015/180/140" alt="Random Image" />
+                </div>
+                <div class="info-box reverse">
+                    <img src="https://picsum.photos/id/1016/180/140" alt="Random Image" />
+                    <div class="info-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum,
+                        distinctio, illum laboriosam temporibus consequatur fugit quia!</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        &copy; 2025 VIT SWC. All rights reserved.
+    </footer>
+    <script>
+        function filterBoxes() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const boxes = document.querySelectorAll('.list-box');
+            boxes.forEach(box => {
+                box.style.display = box.textContent.toLowerCase().includes(input) ? '' : 'none';
+            });
+        }
+        // Dropdown menu show/hide
+        document.addEventListener('DOMContentLoaded', function () {
+            const profileBtn = document.querySelector('.profile-btn');
+            const profileMenu = document.querySelector('.profile-menu');
+            profileBtn.addEventListener('mouseenter', () => {
+                profileMenu.style.display = 'block';
+            });
+            profileBtn.addEventListener('mouseleave', () => {
+                setTimeout(() => { profileMenu.style.display = 'none'; }, 200);
+            });
+            profileMenu.addEventListener('mouseenter', () => {
+                profileMenu.style.display = 'block';
+            });
+            profileMenu.addEventListener('mouseleave', () => {
+                profileMenu.style.display = 'none';
+            });
+        });
+    </script>
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 3;
+        let carouselInterval;
+
+        function showSlide(index) {
+            const track = document.querySelector('.carousel-track');
+            const dots = document.querySelectorAll('.carousel-dots .dot');
+            if (!track) return;
+            currentSlide = index;
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function startCarousel() {
+            carouselInterval = setInterval(nextSlide, 3000);
+        }
+
+        function stopCarousel() {
+            clearInterval(carouselInterval);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            showSlide(0);
+            startCarousel();
+
+            // Dots click event
+            document.querySelectorAll('.carousel-dots .dot').forEach((dot, idx) => {
+                dot.addEventListener('click', () => {
+                    showSlide(idx);
+                    stopCarousel();
+                    startCarousel();
+                });
+            });
+
+            // Pause on hover
+            document.querySelectorAll('.carousel-img').forEach(img => {
+                img.addEventListener('mouseenter', stopCarousel);
+                img.addEventListener('mouseleave', startCarousel);
+            });
+        });
+    </script>
+    <script>
+        // Log Out redirect to login page
+        document.addEventListener('DOMContentLoaded', function () {
+            const logoutLink = document.getElementById('logoutLink');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    window.location.href = "../login/login.html";
+                });
+            }
+        });
+    </script>
+    <button class="club-fab">
+        <img src="image.png" alt="Club" />
+    </button>
+</body>
+
+</html>

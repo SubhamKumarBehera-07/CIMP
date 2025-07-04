@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Club | CIMP Admin Portal</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+    <header>
+        <h1>CIMP Admin Portal</h1>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <nav style="flex: 1;">
+                <a href="../admin/index.html">Dashboard</a>
+                <a href="#" class="selected">Create Club</a>
+                <a href="../MM/index2.html">Manage Members</a>
+                <a href="../RA/index3.html" class="assign-selected">Assign Roles</a>
+            </nav>
+            <div class="header-actions" style="margin-left: 1.5rem;">
+                <div class="profile-dropdown">
+                    <button class="profile-btn">
+                        <span class="profile-icon"></span>
+                    </button>
+                    <div class="profile-menu">
+                        <a href="#">Profile</a>
+                        <a href="#" id="logoutLink">Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="create-club-container">
+            <h2>Create a Club</h2>
+            <form class="club-form" id="clubForm">
+                <label for="clubName">Club Name</label>
+                <input type="text" id="clubName" name="clubName" required>
+
+                <label for="clubDesc">Description</label>
+                <textarea id="clubDesc" name="clubDesc" required></textarea>
+
+                <label for="clubCategory">Category</label>
+                <input type="text" id="clubCategory" name="clubCategory" required>
+
+                <label for="president">Assign President</label>
+                <select id="president" name="president" required>
+                    <option value="">Select President</option>
+                    <option value="student1">Student 1</option>
+                    <option value="student2">Student 2</option>
+                    <option value="student3">Student 3</option>
+                </select>
+
+                <label for="faculty">Assign Faculty Coordinator</label>
+                <select id="faculty" name="faculty" required>
+                    <option value="">Select Faculty</option>
+                    <option value="faculty1">Faculty 1</option>
+                    <option value="faculty2">Faculty 2</option>
+                    <option value="faculty3">Faculty 3</option>
+                </select>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Create</button>
+                    <button type="reset" class="reset-btn">Reset</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="clubs-list-section">
+            <h3>Edit/Delete Clubs</h3>
+            <table class="clubs-table" id="clubsTable">
+                <thead>
+                    <tr>
+                        <th>Club Name</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>President</th>
+                        <th>Faculty Coordinator</th>
+                        <th class="actions">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Club rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+        &copy; 2025 VIT SWC. All rights reserved.
+    </footer>
+    <script>
+        // Demo club list (in-memory for demo)
+        let clubs = [];
+
+        // Handle form submission
+        document.getElementById('clubForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const club = {
+                name: this.clubName.value,
+                desc: this.clubDesc.value,
+                category: this.clubCategory.value,
+                president: this.president.options[this.president.selectedIndex].text,
+                faculty: this.faculty.options[this.faculty.selectedIndex].text
+            };
+            clubs.push(club);
+            renderClubs();
+            this.reset();
+        });
+
+        // Render clubs in table
+        function renderClubs() {
+            const tbody = document.querySelector('#clubsTable tbody');
+            tbody.innerHTML = '';
+            clubs.forEach((club, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${club.name}</td>
+                    <td>${club.desc}</td>
+                    <td>${club.category}</td>
+                    <td>${club.president}</td>
+                    <td>${club.faculty}</td>
+                    <td class="actions">
+                        <button class="edit-btn" onclick="editClub(${idx})">Edit</button>
+                        <button class="delete-btn" onclick="deleteClub(${idx})">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Edit club (simple prompt for demo)
+        window.editClub = function(idx) {
+            const club = clubs[idx];
+            const name = prompt("Edit Club Name:", club.name);
+            if (name !== null) clubs[idx].name = name;
+            const desc = prompt("Edit Description:", club.desc);
+            if (desc !== null) clubs[idx].desc = desc;
+            const category = prompt("Edit Category:", club.category);
+            if (category !== null) clubs[idx].category = category;
+            renderClubs();
+        };
+
+        // Delete club
+        window.deleteClub = function(idx) {
+            if (confirm("Are you sure you want to delete this club?")) {
+                clubs.splice(idx, 1);
+                renderClubs();
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dropdown menu show/hide
+            const profileBtn = document.querySelector('.profile-btn');
+            const profileMenu = document.querySelector('.profile-menu');
+            if (profileBtn && profileMenu) {
+                profileBtn.addEventListener('mouseenter', () => {
+                    profileMenu.style.display = 'block';
+                });
+                profileBtn.addEventListener('mouseleave', () => {
+                    setTimeout(() => { profileMenu.style.display = 'none'; }, 800);
+                });
+                profileMenu.addEventListener('mouseenter', () => {
+                    profileMenu.style.display = 'block';
+                });
+                profileMenu.addEventListener('mouseleave', () => {
+                    profileMenu.style.display = 'none';
+                });
+            }
+
+            // Log Out redirect to login page
+            const logoutLink = document.getElementById('logoutLink');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = "../login/login.html";
+                });
+            }
+        });
+    </script>
+</body>
+</html>

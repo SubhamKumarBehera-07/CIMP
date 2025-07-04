@@ -1,0 +1,596 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Make image.png cover the whole page */
+    background:
+        linear-gradient(rgba(203, 197, 197, 0.5), rgba(24, 24, 24, 0.5)),
+        url('image.png') center center/cover no-repeat;
+    min-height: 100vh;
+    color: #000000;
+}
+header, footer {
+    background: linear-gradient(135deg, #23243a 0%, #2b6cb0 70%, #43e97b 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(42, 43, 45, 0.15);
+}
+header {
+    padding: 1rem 2rem;
+    margin-bottom: 2rem; /* Space below header */
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 4px 16px rgba(29, 30, 33, 0.15);
+    position: relative;
+}
+nav a {
+    color: #141313;
+    margin-right: 1.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s, background 0.2s, font-weight 0.2s, box-shadow 0.2s;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(43, 108, 176, 0.10); /* subtle shadow by default */
+}
+
+nav a:hover {
+    color: #111; /* Change text to black on hover */
+    background: #1c5f5c;
+    font-weight: 700;
+    box-shadow: 0 9px 16px rgba(11, 14, 17, 0.25); /* stronger shadow on hover */
+}
+
+nav a.selected,
+nav a:hover {
+    background: #1e90ff;
+    color: #fff !important;
+    font-weight: 700;
+}
+
+main {
+    padding: 2rem;
+    min-height: 60vh;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 18px;
+    margin: 2rem auto 2rem auto;
+    max-width: none;
+    width: 90%;      /* Cover 90% of the width */
+    box-shadow: 0 4px 24px rgba(34,48,74,0.10);
+    color: #111;
+}
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    margin-top: 2rem; /* Space above footer */
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -4px 16px rgba(34,48,74,0.15);
+}
+h1, h2, h3, h4, h5, h6, p, a {
+    color: #111;
+}
+header h1, header nav a, footer {
+    color: #fff !important;
+}
+.main-boxes {
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.box-full {
+    width: 100%;
+    height: 250px;
+    background: rgba(30, 144, 255, 0.35);
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(34,48,74,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    width: 300%; /* For 3 images, or use: width: calc(100% * 3); */
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(.77,0,.18,1);
+}
+
+.carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+    transition: 
+        transform 0.4s cubic-bezier(.77,0,.18,1),
+        box-shadow 0.4s,
+        filter 0.3s,
+        opacity 0.3s;
+    border-radius: 8px;
+    background: #fff;
+    display: block;
+    margin-right: 0;
+    opacity: 0.5;           /* Make images transparent by default */
+    filter: brightness(1);  /* Normal brightness by default */
+}
+
+.carousel-img:hover {
+    opacity: 1;             /* Fully visible on hover */
+    filter: brightness(0.7);/* Darker highlight on hover */
+    transform: scale(1.07);
+    box-shadow: 0 8px 32px rgba(30, 144, 255, 0.25);
+    z-index: 2;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.6rem;
+    z-index: 10;
+}
+
+.carousel-dots .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0.6;
+    transition: opacity 0.2s, background 0.2s;
+    cursor: pointer;
+    border: 2px solid #1e90ff;
+}
+
+.carousel-dots .dot.active {
+    opacity: 1;
+    background: #1e90ff;
+}
+
+/* Horizontal box row styling */
+.box-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    width: 100%;
+    margin-top: 1.5rem;
+    overflow: visible; /* Remove any scroll */
+}
+
+/* Left box with curve and background image/color */
+.box-left {
+    width: 45%;
+    height: 500px;
+    background: 
+        linear-gradient(135deg, #23243aCC 0%, #2b6cb0CC 70%, #43e97bcc 100%);
+    /* Same as header/footer, but with transparency (CC = ~80% opacity) */
+    border-radius: 40px 10px 40px 10px;
+    box-shadow: 0 2px 16px rgba(34,48,74,0.13);
+    margin-right: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0.5rem;
+    overflow: hidden;
+}
+
+/* Right box with curve and background image/color */
+.box-right {
+    width: 45%;
+    height: 500px;
+    background: 
+        linear-gradient(135deg, #23243aCC 0%, #2b6cb0CC 70%, #43e97bcc 100%);
+    /* Same as header/footer, but with transparency (CC = ~80% opacity) */
+    border-radius: 10px 40px 10px 40px;
+    box-shadow: 0 2px 16px rgba(34,48,74,0.13);
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0.5rem;
+    overflow: hidden;
+    cursor: pointer; /* Makes the whole box clickable */
+    transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+}
+
+.box-right:hover {
+    box-shadow: 0 8px 32px rgba(30,144,255,0.18);
+    background: 
+        linear-gradient(135deg, rgba(200,220,255,0.95), rgba(245,245,245,0.95)),
+        url('right-bg.jpg') center/cover no-repeat;
+    transform: scale(1.02);
+}
+
+/* Example for a possible middle box if needed */
+.box-middle {
+    width: 45%;
+    height: 500px;
+    background: 
+        linear-gradient(135deg, rgba(255,245,230,0.85), rgba(255,220,200,0.85)),
+        url('middle-bg.jpg') center/cover no-repeat;
+    border-radius: 40px 40px 10px 10px;
+    box-shadow: 0 2px 16px rgba(34,48,74,0.13);
+    margin: 0 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0.5rem;
+    overflow: hidden;
+}
+
+.scroll-list {
+    width: 80%;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden; /* Remove horizontal scroll */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0 auto;
+    scrollbar-width: thin;
+    scrollbar-color: #1e90ff #e6ffe6;
+    max-height: 400px; /* Adjust as needed for visible scroll */
+}
+.scroll-list::-webkit-scrollbar {
+    width: 8px;
+}
+.scroll-list::-webkit-scrollbar-thumb {
+    background: #1e90ff;
+    border-radius: 6px;
+}
+.scroll-list::-webkit-scrollbar-track {
+    background: #e6ffe6;
+    border-radius: 6px;
+}
+
+.list-box {
+    width: 100%;
+    min-height: 100px; /* Increased height */
+    background: rgba(255,255,255,0.35);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #111;
+    font-weight: 500;
+    box-shadow: 0 1px 4px rgba(34,48,74,0.08);
+    margin-bottom: 0.7rem;
+    padding: 0 2rem;
+    position: relative;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+/* Show different solid colors when selected */
+.list-box.selected,
+.list-box:active,
+.list-box:focus {
+    background: #1e90ff;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(30,144,255,0.18);
+    outline: none;
+}
+
+.list-box.selected .member-count,
+.list-box:active .member-count,
+.list-box:focus .member-count {
+    color: #fff;
+}
+
+.list-box.selected .group-name,
+.list-box:active .group-name,
+.list-box:focus .group-name {
+    color: #fff;
+}
+
+/* Optional: visually highlight on hover */
+.list-box:hover {
+    background: #b2ebf2;
+    box-shadow: 0 4px 16px rgba(30,144,255,0.18);
+    transform: scale(1.03);
+    color: #111;
+}
+
+.list-box:hover .member-count,
+.list-box:hover .group-name {
+    color: #111;
+}
+
+.group-number {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #1e90ff;
+    flex: 0 0 30px;
+    text-align: left;
+}
+
+.group-name {
+    flex: 1 1 auto;
+    text-align: left;
+    color: #222;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.member-count {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #388e3c;
+    flex: 0 0 90px;
+    text-align: right;
+}
+
+.header-actions {
+    position: absolute;
+    top: 1.2rem;
+    right: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    z-index: 10;
+}
+
+.login-btn {
+    background: #e53935;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.10);
+}
+.login-btn:hover {
+    background: #b71c1c;
+    box-shadow: 0 4px 16px rgba(229,57,53,0.18);
+}
+
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-btn {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    position: relative;
+}
+
+.profile-btn:hover {
+    background: #e0e0e0;
+}
+
+.profile-icon {
+    display: block;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: url('https://img.icons8.com/ios-filled/50/000000/skull.png') center/cover no-repeat, #fff;
+    /* fallback: skull icon from icons8, you can replace with your own */
+    border: 2px solid #bdbdbd;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.profile-btn:hover .profile-icon {
+    border-color: #e53935;
+    background-color: #ffeaea;
+}
+
+.profile-menu {
+    display: none;
+    position: absolute;
+    top: 52px;
+    right: 0;
+    background: rgba(255,255,255,0.97);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(34,48,74,0.15);
+    min-width: 120px;
+    z-index: 100;
+    flex-direction: column;
+    padding: 0.5rem 0;
+}
+
+.profile-menu a {
+    display: block;
+    padding: 0.7rem 1.2rem;
+    color: #e53935;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s, color 0.2s;
+}
+.profile-menu a:last-child {
+    border-bottom: none;
+}
+.profile-menu a:hover {
+    background: #ffeaea;
+    color: #b71c1c;
+}
+
+/* Make the search bar cover the full width */
+.search-header {
+    width: 80%;
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-header input[type="text"] {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #b3b3b3;
+    background: rgba(255,255,255,0.6);
+    color: #111;
+    font-size: 1.1rem;
+}
+
+.search-header button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    background: #1e90ff;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.2s;
+}
+
+.search-header button:hover {
+    background: #1558a0;
+}
+
+.events-heading {
+    width: 80%;
+    margin: 0 auto 0.7rem auto;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #cc2604; /* Unique color for heading */
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.events-list {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    align-items: center;
+}
+
+.event-box {
+    width: 100%;
+    min-height: 38px;
+    background: #444857;
+    border-radius: 8px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    font-weight: 500;
+    box-shadow: 0 1px 4px rgba(34,48,74,0.10);
+    padding: 0.5rem 0;
+    letter-spacing: 0.5px;
+    cursor: pointer; /* Make event sub boxes functionable */
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.event-box:hover {
+    background: #1e90ff;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(30,144,255,0.18);
+    transform: scale(1.04);
+}
+
+.club-fab {
+    position: fixed;
+    right: 40px;
+    bottom: 100px; /* Increased from 40px to 100px to avoid contact with footer */
+    width: 62px;
+    height: 62px;
+    background: #e53935;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 16px rgba(229,57,53,0.18);
+    cursor: pointer;
+    z-index: 999;
+    border: none;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    outline: none;
+    letter-spacing: 1px;
+    overflow: hidden;
+    padding: 0;
+}
+
+.club-fab img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+.extra-section {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.info-box {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 20px;
+  background: rgba(240, 248, 255, 0.6);
+  box-shadow: 0 4px 16px rgba(34, 48, 74, 0.12);
+  padding: 1rem 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.info-box:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 32px rgba(30, 144, 255, 0.2);
+}
+
+.info-box img {
+  width: 180px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.info-text {
+  flex: 1;
+  padding: 0 1rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #222;
+}
+
+.info-box.reverse {
+  flex-direction: row-reverse;
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIMP Admin Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <header class="login-header">
+        <div class="header-left">
+            <div class="logo-circle">
+                <img src="../admin/image.png" alt="Logo">
+            </div>
+        </div>
+        <div class="header-center">
+            <div class="header-title">Welcome to Club Information Management Portal</div>
+            <div class="header-subtitle">by CodeChef Club</div>
+        </div>
+        <div class="header-right">
+            <button class="back-btn" onclick="window.history.back()">Back</button>
+        </div>
+    </header>
+    <div class="login-bg">
+        <form class="login-form" id="loginForm">
+            <h2>Admin Login</h2>
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter username" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+
+            <!-- Captcha Section -->
+            <div class="captcha-section">
+                <span id="captchaText"></span>
+                <button type="button" class="refresh-captcha" onclick="generateCaptcha()" title="Refresh Captcha">&#x21bb;</button>
+            </div>
+            <input type="text" id="captchaInput" placeholder="Enter captcha" required>
+
+            <button type="submit">Login</button>
+            <div class="signup-link">
+                Don't have an account?
+                <a href="#" id="signupLink">Sign up</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    function generateCaptcha() {
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        let captcha = '';
+        for (let i = 0; i < 6; i++) {
+            captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        document.getElementById('captchaText').textContent = captcha;
+        // Store captcha for validation
+        window.currentCaptcha = captcha;
+    }
+    window.onload = generateCaptcha;
+
+    // Example sign up click handler
+    document.getElementById('signupLink').onclick = function(e) {
+        e.preventDefault();
+        alert('Sign up functionality coming soon!');
+    };
+
+    // Login form handler
+    document.getElementById('loginForm').onsubmit = function(e) {
+        e.preventDefault();
+        const captchaInput = document.getElementById('captchaInput').value.trim();
+        if (captchaInput !== window.currentCaptcha) {
+            alert('Captcha incorrect. Please try again.');
+            generateCaptcha();
+            document.getElementById('captchaInput').value = '';
+            return false;
+        }
+        // Redirect to dashboard (index.html)
+        window.location.href = "../admin/index.html";
+    };
+    </script>
+</body>
+</html>
